@@ -6,6 +6,8 @@ import { z } from "zod";
 import { setupAuth, registerAuthRoutes, isAuthenticated } from "./replit_integrations/auth";
 import { registerAdminRoutes } from "./admin_routes";
 import { registerAuthEndpoints } from "./auth_endpoints";
+import { registerAdminAuth } from "./admin_auth";
+import { seedAdminAndGyms } from "./seed_admin";
 import OpenAI from "openai";
 import { users } from "@shared/models/auth";
 import { db } from "./db";
@@ -40,15 +42,9 @@ function getPerplexityClient(): OpenAI {
 
 // Admin authentication middleware
 async function isAdmin(req: any, res: any, next: any) {
-  if (!req.user) {
-    return res.status(401).json({ message: "Unauthorized" });
+  if (!req.session?.isAdmin) {
+    return res.status(403).json({ message: "Acesso de admin necessário" });
   }
-  
-  const user = await storage.getUserById(req.user.claims.sub);
-  if (!user || !user.isAdmin) {
-    return res.status(403).json({ message: "Admin access required" });
-  }
-  
   next();
 }
 
@@ -57,10 +53,14 @@ export async function registerRoutes(
   app: Express
 ): Promise<Server> {
   
+  // Seed admin e academias
+  await seedAdminAndGyms();
+  
   // Setup Authentication
   await setupAuth(app);
   registerAuthRoutes(app);
   await registerAuthEndpoints(app);
+  await registerAdminAuth(app);
   
   // Register admin routes
   await registerAdminRoutes(app);
