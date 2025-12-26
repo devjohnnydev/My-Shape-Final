@@ -86,7 +86,6 @@ export default function AdminDashboard() {
       const res = await fetch(`/api/admin/approvals/${userId}/reject`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ reason: "Rejeitado pelo admin" }),
         credentials: "include",
       });
       if (!res.ok) throw new Error("Failed to reject");
@@ -94,147 +93,172 @@ export default function AdminDashboard() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/approvals"] });
-      toast({ title: "Usuário rejeitado!", variant: "default" });
+      toast({ title: "Usuário rejeitado", variant: "default" });
     },
   });
 
-  const pendingApprovals = approvals.filter(a => a.status === 'pending');
+  const pendingUsers = approvals.filter(a => a.status === 'pending');
   const approvedUsers = approvals.filter(a => a.status === 'approved');
 
   return (
-    <div className="container mx-auto p-6 space-y-8">
-      <div>
-        <h1 className="text-4xl font-bold mb-2">Painel de Administração</h1>
-        <p className="text-muted-foreground">Gerencie academias e aprove usuários</p>
+    <div className="p-6 space-y-6">
+      <div className="flex justify-between items-center">
+        <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+        <Button variant="outline" onClick={() => window.location.href = '/auth/logout'} data-testid="button-logout">
+          Logout
+        </Button>
       </div>
 
-      {/* Gyms Section */}
-      <div>
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-semibold">Academias</h2>
-          <Button onClick={() => setShowGymForm(!showGymForm)}>
-            <Plus className="mr-2 h-4 w-4" /> Nova Academia
-          </Button>
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <Card className="p-6">
+          <p className="text-sm text-muted-foreground">Academias</p>
+          <p className="text-3xl font-bold" data-testid="stat-gyms">{gyms.length}</p>
+        </Card>
+        <Card className="p-6">
+          <p className="text-sm text-muted-foreground">Aprovações Pendentes</p>
+          <p className="text-3xl font-bold" data-testid="stat-pending">{pendingUsers.length}</p>
+        </Card>
+        <Card className="p-6">
+          <p className="text-sm text-muted-foreground">Usuários Aprovados</p>
+          <p className="text-3xl font-bold" data-testid="stat-approved">{approvedUsers.length}</p>
+        </Card>
+      </div>
 
-        {showGymForm && (
-          <Card className="p-4 mb-4">
-            <div className="space-y-4">
-              <Input
-                placeholder="Nome da Academia"
-                value={newGym.name}
-                onChange={(e) => setNewGym({ ...newGym, name: e.target.value })}
-                data-testid="input-gym-name"
-              />
-              <div className="flex gap-4">
-                <div className="flex-1">
-                  <label className="text-sm font-medium">Cor Principal</label>
-                  <input
-                    type="color"
-                    value={newGym.primaryColor}
-                    onChange={(e) => setNewGym({ ...newGym, primaryColor: e.target.value })}
-                    className="w-full h-10 rounded cursor-pointer"
-                  />
-                </div>
-                <div className="flex-1">
-                  <label className="text-sm font-medium">Cor Secundária</label>
-                  <input
-                    type="color"
-                    value={newGym.secondaryColor}
-                    onChange={(e) => setNewGym({ ...newGym, secondaryColor: e.target.value })}
-                    className="w-full h-10 rounded cursor-pointer"
-                  />
-                </div>
+      <div className="space-y-4">
+        <h2 className="text-2xl font-bold">Academias</h2>
+        {!showGymForm ? (
+          <Button onClick={() => setShowGymForm(true)} data-testid="button-add-gym">
+            <Plus className="h-4 w-4 mr-2" />
+            Adicionar Academia
+          </Button>
+        ) : (
+          <Card className="p-6 space-y-4">
+            <h3 className="font-semibold">Nova Academia</h3>
+            <Input
+              placeholder="Nome da Academia"
+              value={newGym.name}
+              onChange={(e) => setNewGym({ ...newGym, name: e.target.value })}
+              data-testid="input-gym-name"
+            />
+            <div className="flex gap-4">
+              <div>
+                <label className="block text-sm mb-2">Cor Primária</label>
+                <input
+                  type="color"
+                  value={newGym.primaryColor}
+                  onChange={(e) => setNewGym({ ...newGym, primaryColor: e.target.value })}
+                  data-testid="input-primary-color"
+                />
               </div>
-              <Button 
-                onClick={() => addGymMutation.mutate(newGym)} 
-                disabled={!newGym.name || addGymMutation.isPending}
-                className="w-full"
+              <div>
+                <label className="block text-sm mb-2">Cor Secundária</label>
+                <input
+                  type="color"
+                  value={newGym.secondaryColor}
+                  onChange={(e) => setNewGym({ ...newGym, secondaryColor: e.target.value })}
+                  data-testid="input-secondary-color"
+                />
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <Button
+                onClick={() => addGymMutation.mutate(newGym)}
+                disabled={addGymMutation.isPending || !newGym.name}
                 data-testid="button-save-gym"
               >
-                {addGymMutation.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : "Salvar"}
+                Salvar
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => setShowGymForm(false)}
+                data-testid="button-cancel"
+              >
+                Cancelar
               </Button>
             </div>
           </Card>
         )}
 
-        <div className="grid gap-3 md:grid-cols-2">
-          {gyms.map((gym) => (
-            <Card key={gym.id} className="p-4">
-              <h3 className="font-bold mb-3">{gym.name}</h3>
-              <div className="flex gap-3">
-                <div className="w-12 h-12 rounded" style={{ backgroundColor: gym.primaryColor }}></div>
-                <div className="w-12 h-12 rounded" style={{ backgroundColor: gym.secondaryColor }}></div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {gyms.map(gym => (
+            <Card key={gym.id} className="p-4" data-testid={`gym-card-${gym.id}`}>
+              <h3 className="font-semibold">{gym.name}</h3>
+              <div className="flex gap-2 mt-3">
+                <div
+                  className="w-10 h-10 rounded border"
+                  style={{ backgroundColor: gym.primaryColor }}
+                />
+                <div
+                  className="w-10 h-10 rounded border"
+                  style={{ backgroundColor: gym.secondaryColor }}
+                />
               </div>
             </Card>
           ))}
         </div>
       </div>
 
-      {/* User Approvals Section */}
-      <div>
-        <h2 className="text-2xl font-semibold mb-4">Aprovações de Usuários</h2>
-
-        <div className="space-y-4">
-          <div>
-            <h3 className="text-lg font-semibold mb-3 text-yellow-600">Pendentes ({pendingApprovals.length})</h3>
-            {pendingApprovals.length === 0 ? (
-              <p className="text-muted-foreground">Nenhuma solicitação pendente</p>
-            ) : (
-              <div className="space-y-3">
-                {pendingApprovals.map((approval) => (
-                  <Card key={approval.id} className="p-4">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="font-medium">{approval.userId}</p>
-                        <p className="text-sm text-muted-foreground">
-                          Solicitado em: {new Date(approval.requestedAt).toLocaleDateString('pt-BR')}
-                        </p>
-                      </div>
-                      <div className="flex gap-2">
-                        <Button
-                          size="sm"
-                          onClick={() => approveMutation.mutate({ userId: approval.userId, gymId: approval.gymId || 1 })}
-                          disabled={approveMutation.isPending}
-                          className="bg-green-600 hover:bg-green-700"
-                          data-testid={`button-approve-${approval.userId}`}
-                        >
-                          <Check className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="destructive"
-                          onClick={() => rejectMutation.mutate(approval.userId)}
-                          disabled={rejectMutation.isPending}
-                          data-testid={`button-reject-${approval.userId}`}
-                        >
-                          <X className="h-4 w-4" />
-                        </Button>
-                      </div>
+      <div className="space-y-4">
+        <h2 className="text-2xl font-bold">Aprovações de Usuários</h2>
+        
+        <div>
+          <h3 className="text-lg font-semibold mb-3 text-yellow-600">Pendentes ({pendingUsers.length})</h3>
+          {pendingUsers.length === 0 ? (
+            <p className="text-muted-foreground">Nenhuma aprovação pendente</p>
+          ) : (
+            <div className="space-y-3">
+              {pendingUsers.map((approval) => (
+                <Card key={approval.id} className="p-4 bg-yellow-50 dark:bg-yellow-950">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="font-medium">{approval.userId}</p>
+                      <p className="text-sm text-muted-foreground">
+                        Solicitado em: {new Date(approval.requestedAt).toLocaleDateString('pt-BR')}
+                      </p>
                     </div>
-                  </Card>
-                ))}
-              </div>
-            )}
-          </div>
+                    <div className="flex gap-2">
+                      <Button
+                        size="sm"
+                        onClick={() => approveMutation.mutate({ userId: approval.userId, gymId: approval.gymId || 1 })}
+                        disabled={approveMutation.isPending}
+                        className="bg-green-600 hover:bg-green-700"
+                        data-testid={`button-approve-${approval.userId}`}
+                      >
+                        <Check className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="destructive"
+                        onClick={() => rejectMutation.mutate(approval.userId)}
+                        disabled={rejectMutation.isPending}
+                        data-testid={`button-reject-${approval.userId}`}
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          )}
+        </div>
 
-          <div>
-            <h3 className="text-lg font-semibold mb-3 text-green-600">Aprovados ({approvedUsers.length})</h3>
-            {approvedUsers.length === 0 ? (
-              <p className="text-muted-foreground">Nenhum usuário aprovado</p>
-            ) : (
-              <div className="space-y-3">
-                {approvedUsers.map((approval) => (
-                  <Card key={approval.id} className="p-4 bg-green-50 dark:bg-green-950">
-                    <p className="font-medium">{approval.userId}</p>
-                    <p className="text-sm text-muted-foreground">
-                      Aprovado em: {approval.approvedAt ? new Date(approval.approvedAt).toLocaleDateString('pt-BR') : '-'}
-                    </p>
-                  </Card>
-                ))}
-              </div>
-            )}
-          </div>
+        <div>
+          <h3 className="text-lg font-semibold mb-3 text-green-600">Aprovados ({approvedUsers.length})</h3>
+          {approvedUsers.length === 0 ? (
+            <p className="text-muted-foreground">Nenhum usuário aprovado</p>
+          ) : (
+            <div className="space-y-3">
+              {approvedUsers.map((approval) => (
+                <Card key={approval.id} className="p-4 bg-green-50 dark:bg-green-950">
+                  <p className="font-medium">{approval.userId}</p>
+                  <p className="text-sm text-muted-foreground">
+                    Status: Aprovado
+                  </p>
+                </Card>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

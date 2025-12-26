@@ -5,6 +5,7 @@ import { api } from "@shared/routes";
 import { z } from "zod";
 import { setupAuth, registerAuthRoutes, isAuthenticated } from "./replit_integrations/auth";
 import { registerAdminRoutes } from "./admin_routes";
+import { registerAuthEndpoints } from "./auth_endpoints";
 import OpenAI from "openai";
 import { users } from "@shared/models/auth";
 import { db } from "./db";
@@ -59,6 +60,7 @@ export async function registerRoutes(
   // Setup Authentication
   await setupAuth(app);
   registerAuthRoutes(app);
+  await registerAuthEndpoints(app);
   
   // Register admin routes
   await registerAdminRoutes(app);

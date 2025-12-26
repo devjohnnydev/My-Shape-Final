@@ -7,7 +7,7 @@ import { GymManagement } from "@/components/admin/GymManagement";
 import { UserManagement } from "@/components/admin/UserManagement";
 import { DashboardStats } from "@/components/admin/DashboardStats";
 
-interface DashboardStats {
+interface DashboardStatsData {
   totalUsers: number;
   totalGyms: number;
   totalPending: number;
@@ -19,7 +19,7 @@ interface DashboardStats {
 export default function AdminDashboardPageComponent() {
   const [activeTab, setActiveTab] = useState("stats");
 
-  const { data: stats } = useQuery<DashboardStats>({
+  const { data: stats } = useQuery<DashboardStatsData>({
     queryKey: ["/api/admin/dashboard/stats"],
   });
 
