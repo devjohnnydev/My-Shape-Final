@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { insertUserSettingsSchema, insertWorkoutSchema, userSettings, workouts } from './schema';
+import { insertUserSettingsSchema, insertWorkoutSchema, userSettings, workouts, insertGymSchema } from './schema';
 
 export const errorSchemas = {
   validation: z.object({
@@ -10,6 +10,9 @@ export const errorSchemas = {
     message: z.string(),
   }),
   internal: z.object({
+    message: z.string(),
+  }),
+  unauthorized: z.object({
     message: z.string(),
   }),
 };
@@ -51,7 +54,6 @@ export const api = {
       responses: {
         200: z.custom<typeof workouts.$inferSelect>(),
         400: errorSchemas.validation,
-        402: z.object({ message: z.string() }), // Payment required
       },
     },
     complete: {
@@ -76,6 +78,64 @@ export const api = {
           sources: z.array(z.string()).optional(),
         }),
         400: errorSchemas.validation,
+      },
+    },
+  },
+  admin: {
+    gyms: {
+      list: {
+        method: 'GET' as const,
+        path: '/api/admin/gyms',
+      },
+      create: {
+        method: 'POST' as const,
+        path: '/api/admin/gyms',
+        input: insertGymSchema,
+      },
+      update: {
+        method: 'PATCH' as const,
+        path: '/api/admin/gyms/:id',
+        input: insertGymSchema.partial(),
+      },
+      delete: {
+        method: 'DELETE' as const,
+        path: '/api/admin/gyms/:id',
+      },
+    },
+    users: {
+      list: {
+        method: 'GET' as const,
+        path: '/api/admin/users',
+      },
+      approve: {
+        method: 'POST' as const,
+        path: '/api/admin/users/:id/approve',
+        input: z.object({
+          accessLevel: z.enum(['total', 'partial']),
+          aiChatEnabled: z.boolean().optional(),
+        }),
+      },
+      reject: {
+        method: 'POST' as const,
+        path: '/api/admin/users/:id/reject',
+      },
+      block: {
+        method: 'POST' as const,
+        path: '/api/admin/users/:id/block',
+      },
+      updateAccess: {
+        method: 'PATCH' as const,
+        path: '/api/admin/users/:id/access',
+        input: z.object({
+          accessLevel: z.enum(['total', 'partial']).optional(),
+          aiChatEnabled: z.boolean().optional(),
+        }),
+      },
+    },
+    dashboard: {
+      stats: {
+        method: 'GET' as const,
+        path: '/api/admin/dashboard/stats',
       },
     },
   },
