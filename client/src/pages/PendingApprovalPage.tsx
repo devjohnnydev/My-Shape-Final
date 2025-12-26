@@ -4,10 +4,16 @@ import { Card } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 
+interface User {
+  id: string;
+  email: string;
+  approvalStatus: string;
+}
+
 export default function PendingApprovalPage() {
   const [, setLocation] = useLocation();
 
-  const { data: user } = useQuery({
+  const { data: user } = useQuery<User>({
     queryKey: ["/api/auth/user"],
     retry: 1,
   });
@@ -18,7 +24,7 @@ export default function PendingApprovalPage() {
     } else if (user?.approvalStatus === "rejected" || user?.approvalStatus === "blocked") {
       setLocation("/auth/denied");
     }
-  }, [user, setLocation]);
+  }, [user?.approvalStatus, setLocation]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
@@ -38,7 +44,7 @@ export default function PendingApprovalPage() {
 
         <div className="space-y-2 text-sm text-slate-600 dark:text-slate-400">
           <p>Status: <span className="font-semibold text-yellow-600 dark:text-yellow-400">Pendente</span></p>
-          <p>Email: {user?.email}</p>
+          {user?.email && <p>Email: {user.email}</p>}
         </div>
 
         <Button 

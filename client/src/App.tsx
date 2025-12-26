@@ -15,7 +15,9 @@ import ProfilePage from "@/pages/ProfilePage";
 import SettingsPage from "@/pages/SettingsPage";
 import QAPage from "@/pages/QAPage";
 import AdminPage from "@/pages/AdminPage";
-import AdminDashboard from "@/pages/AdminDashboard";
+import AdminDashboardPage from "@/pages/AdminDashboardPage";
+import PendingApprovalPage from "@/pages/PendingApprovalPage";
+import AdminLoginPage from "@/pages/AdminLoginPage";
 
 function ProtectedRoute({ component: Component }: { component: React.ComponentType }) {
   const { user, isLoading } = useAuth();
@@ -29,9 +31,15 @@ function ProtectedRoute({ component: Component }: { component: React.ComponentTy
   }
 
   if (!user) {
-    // Redirect logic handled in useAuth or auth-utils usually, 
-    // but here we just render LandingPage for simplicity if not logged in
     return <LandingPage />;
+  }
+
+  if (user.approvalStatus === "pending") {
+    return <PendingApprovalPage />;
+  }
+
+  if (user.approvalStatus === "rejected" || user.approvalStatus === "blocked") {
+    return <div className="text-center pt-20"><h1>Access Denied</h1></div>;
   }
 
   return <Component />;
@@ -70,12 +78,20 @@ function Router() {
         {() => <ProtectedRoute component={QAPage} />}
       </Route>
 
+      <Route path="/admin-login">
+        <AdminLoginPage />
+      </Route>
+
       <Route path="/admin">
         {() => <ProtectedRoute component={AdminPage} />}
       </Route>
       
       <Route path="/admin/dashboard">
-        {() => <ProtectedRoute component={AdminDashboard} />}
+        {() => <ProtectedRoute component={AdminDashboardPage} />}
+      </Route>
+
+      <Route path="/pending-approval">
+        <PendingApprovalPage />
       </Route>
 
       <Route component={NotFound} />

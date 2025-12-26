@@ -7,10 +7,19 @@ import { GymManagement } from "@/components/admin/GymManagement";
 import { UserManagement } from "@/components/admin/UserManagement";
 import { DashboardStats } from "@/components/admin/DashboardStats";
 
-export default function AdminDashboardPage() {
+interface DashboardStats {
+  totalUsers: number;
+  totalGyms: number;
+  totalPending: number;
+  totalApproved: number;
+  totalAccessTotal: number;
+  totalAccessPartial: number;
+}
+
+export default function AdminDashboardPageComponent() {
   const [activeTab, setActiveTab] = useState("stats");
 
-  const { data: stats } = useQuery({
+  const { data: stats } = useQuery<DashboardStats>({
     queryKey: ["/api/admin/dashboard/stats"],
   });
 
