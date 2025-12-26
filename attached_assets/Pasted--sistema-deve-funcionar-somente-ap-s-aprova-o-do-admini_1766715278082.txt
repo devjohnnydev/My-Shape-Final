@@ -1,0 +1,161 @@
+ sistema deve funcionar somente após aprovação do administrador.
+
+---
+
+## 👤 PERFIS DO SISTEMA
+
+### 🔐 1. Administrador (ADM)
+- Login exclusivo para administrador
+- Painel administrativo completo (Dashboard ADM)
+
+### 🏋️ 2. Usuário Final
+- Cadastro obrigatório
+- Uso do sistema SOMENTE após aprovação do administrador
+
+---
+
+## 🔑 AUTENTICAÇÃO E SEGURANÇA
+- Sistema de login seguro
+- Controle de sessão
+- Bloqueio automático de usuários não aprovados
+- Mensagem clara para usuários pendentes:
+  👉 "Seu cadastro está em análise pelo administrador."
+
+---
+
+## 🧑‍💼 PAINEL DO ADMINISTRADOR (ADM)
+
+### Funcionalidades obrigatórias do ADM:
+
+#### 🏢 Gestão de Academias
+O administrador pode:
+- Cadastrar academias
+- Editar academias
+- Excluir academias
+- Definir identidade visual da academia:
+  - Nome da academia
+  - Cores principais (ex: amarelo/preto, azul/vermelho, vermelho/preto)
+  - Tipo de parceria
+
+Exemplos de academias:
+- Smart Fit
+- SkyFit
+- Gaviões
+- Outras academias locais
+
+---
+
+#### 👥 Gestão de Usuários
+O administrador pode:
+- Visualizar lista de usuários cadastrados
+- Ver detalhes do usuário:
+  - Nome
+  - Email
+  - Idade
+  - Academia onde treina
+  - Tipo de plano
+  - Status (Pendente / Aprovado / Bloqueado)
+
+---
+
+#### ✅ Aprovação de Usuários
+- Usuário só acessa o sistema após aprovação do ADM
+- O ADM pode:
+  - Aprovar usuário
+  - Reprovar usuário
+  - Bloquear usuário
+
+---
+
+#### 🔓 Controle de Acesso (Total ou Parcial)
+O ADM pode definir, por usuário:
+
+- ✅ Acesso TOTAL:
+  - Treinos automáticos
+  - Planejamento semanal
+  - Frases motivacionais
+  - Chat com Inteligência Artificial
+
+- ⚠️ Acesso PARCIAL:
+  - Treinos básicos
+  - Planejamento simples
+  - ❌ SEM chat com Inteligência Artificial
+
+---
+
+## 🧾 CADASTRO DO USUÁRIO
+
+No cadastro, o usuário deve obrigatoriamente informar:
+- Nome completo
+- Email
+- Senha
+- Idade
+- Plano que utiliza:
+  - TotalPass
+  - GymPass
+  - Direto na academia
+- Academia onde treina (selecionada da lista cadastrada pelo ADM)
+
+Após o cadastro:
+- Status inicial: **PENDENTE**
+- Usuário não pode acessar o sistema até aprovação do ADM
+
+---
+
+## 🧠 CHAT COM INTELIGÊNCIA ARTIFICIAL (OPCIONAL POR USUÁRIO)
+- Chat de IA disponível SOMENTE para usuários com acesso total
+- O ADM pode ativar ou desativar o chat de IA por usuário
+- O chat auxilia em:
+  - Dúvidas de treino
+  - Motivação
+  - Sugestões de exercícios
+
+---
+
+## 🎨 IDENTIDADE VISUAL DINÂMICA
+- O sistema deve alterar cores e tema conforme a academia escolhida pelo usuário
+- Exemplo:
+  - Smart Fit → Azul e vermelho
+  - SkyFit → Amarelo e preto
+  - Gaviões → Vermelho e preto
+- Caso não exista academia, usar padrão My Shape (azul e vermelho)
+
+---
+
+## 📊 DASHBOARD ADMINISTRATIVO
+- Total de usuários cadastrados
+- Usuários pendentes de aprovação
+- Usuários ativos
+- Usuários com acesso total
+- Usuários com acesso parcial
+- Usuários por academia
+
+---
+
+## 🧱 TECNOLOGIA
+Utilizar stack compatível com Replit:
+- Backend: Python (FastAPI ou Flask) ou Node.js
+- Banco de dados: PostgreSQL ou SQLite
+- Frontend: React ou React Native
+- Sistema de permissões por perfil
+- Código organizado em MVC ou arquitetura modular
+
+---
+
+## 📂 ESTRUTURA DO PROJETO
+- /backend
+- /frontend
+- /database
+- /admin
+- /auth
+- /users
+- /academias
+- /treinos
+- /ia (opcional)
+
+---
+
+## 🚀 OBJETIVO FINAL
+Criar um SaaS escalável, profissional, seguro e pronto para monetização, onde o administrador tenha controle total da plataforma e o usuário só utilize o sistema conforme o plano e permissões liberadas.
+
+Crie o projeto com código comentado, telas funcionais e preparado para evolução futura.
