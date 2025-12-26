@@ -1,0 +1,181 @@
+📱 AJUSTES E NOVAS FUNCIONALIDADES – APP MY SHAPE (SAAS)
+
+Este documento descreve todas as modificações e melhorias que devem ser aplicadas ao aplicativo My Shape, transformando-o em um SaaS completo, com controle administrativo, aprovação de usuários e liberação de funcionalidades por plano.
+
+🔐 1. PERFIS DE ACESSO DO SISTEMA
+
+O sistema deve possuir dois perfis principais:
+
+🧑‍💼 Administrador (ADM)
+
+Acesso exclusivo via tela de login do administrador
+
+Controle total da plataforma
+
+🏋️ Usuário Final
+
+Acesso liberado somente após cadastro e aprovação do administrador
+
+🖥️ 2. TELA DE LOGIN DO ADMINISTRADOR
+
+Adicionar uma página de login exclusiva para o ADM, separada do login do usuário comum.
+
+O Administrador poderá:
+
+Gerenciar academias
+
+Aprovar ou reprovar usuários
+
+Liberar acesso total ou parcial
+
+Ativar ou desativar o chat com Inteligência Artificial
+
+Bloquear usuários quando necessário
+
+🏢 3. GESTÃO DE ACADEMIAS (ADM)
+
+No painel administrativo, o ADM deve conseguir:
+
+Cadastrar novas academias
+
+Editar academias existentes
+
+Excluir academias
+
+Definir identidade visual da academia:
+
+Nome da academia
+
+Cores principais (exemplo: azul/vermelho, amarelo/preto, vermelho/preto)
+
+Exemplos de academias:
+
+Smart Fit
+
+SkyFit
+
+Gaviões
+
+Outras academias parceiras ou locais
+
+Essas academias devem aparecer como opção no cadastro do usuário.
+
+👤 4. CADASTRO DO USUÁRIO
+
+O cadastro do usuário deve conter obrigatoriamente os seguintes campos:
+
+Nome completo
+
+Email
+
+Senha
+
+Idade
+
+Tipo de plano utilizado:
+
+TotalPass
+
+GymPass
+
+Direto na academia
+
+Academia onde treina (selecionada da lista cadastrada pelo ADM)
+
+🔒 Status inicial do usuário:
+
+PENDENTE DE APROVAÇÃO
+
+Enquanto estiver pendente:
+
+O usuário não pode acessar o sistema
+
+Deve visualizar a mensagem:
+
+“Seu cadastro está em análise pelo administrador.”
+
+✅ 5. APROVAÇÃO DE USUÁRIOS (ADM)
+
+No painel administrativo, o ADM poderá:
+
+Aprovar usuário
+
+Reprovar usuário
+
+Bloquear usuário
+
+Somente usuários APROVADOS poderão utilizar o aplicativo.
+
+🔓 6. CONTROLE DE ACESSO (TOTAL OU PARCIAL)
+
+O administrador poderá definir o nível de acesso por usuário:
+
+🔹 Acesso Total
+
+Usuário terá acesso a:
+
+Treinos automáticos personalizados
+
+Planejamento semanal completo
+
+Histórico de treinos
+
+Frases motivacionais
+
+✅ Chat com Inteligência Artificial
+
+🔹 Acesso Parcial
+
+Usuário terá acesso a:
+
+Treinos básicos
+
+Planejamento simples
+
+Frases motivacionais
+
+❌ SEM acesso ao chat com Inteligência Artificial
+
+O ADM pode alterar esse acesso a qualquer momento.
+
+🧠 7. CHAT COM INTELIGÊNCIA ARTIFICIAL
+
+O chat com IA deve existir no sistema, porém:
+
+Só pode ser utilizado por usuários com Acesso Total
+
+Pode ser ativado ou desativado individualmente pelo ADM
+
+Usuários com acesso parcial não visualizam o chat
+
+🎨 8. IDENTIDADE VISUAL DINÂMICA POR ACADEMIA
+
+O app deve alterar automaticamente as cores e o tema conforme a academia selecionada pelo usuário:
+
+Smart Fit → Azul e Vermelho
+
+SkyFit → Amarelo e Preto
+
+Gaviões → Vermelho e Preto
+
+Outras academias → Cores definidas pelo ADM
+
+Caso o usuário não selecione academia:
+
+Utilizar o padrão do My Shape (Azul e Vermelho)
+
+📊 9. DASHBOARD ADMINISTRATIVO
+
+O painel do administrador deve exibir métricas claras, como:
+
+Total de usuários cadastrados
+
+Usuários pendentes de aprovação
+
+Usuários ativos
+
+Usuários com acesso total
+
+Usuários com acesso parcial
+
+Usuários por academia
