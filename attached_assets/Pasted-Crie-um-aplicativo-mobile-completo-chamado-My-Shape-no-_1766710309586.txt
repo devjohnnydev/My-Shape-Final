@@ -1,0 +1,145 @@
+Crie um aplicativo mobile completo chamado **My Shape**, no formato SaaS (Software as a Service), focado em gerenciamento de rotinas de treino físico.
+
+### 📱 Tipo de App
+- App mobile (prioridade Android, mas com estrutura preparada para iOS)
+- Backend + Frontend integrados
+- Estrutura escalável para assinaturas mensais
+- Interface moderna, responsiva e profissional
+
+---
+
+### 🎯 Objetivo do App
+Ajudar usuários a:
+- Ganhar massa muscular
+- Perder peso
+- Definir o corpo
+- Manter constância e disciplina nos treinos
+- Receber motivação constante
+
+---
+
+### 👤 Cadastro e Login
+- Cadastro de usuário (nome, email, senha)
+- Login seguro
+- Perfil do usuário contendo:
+  - Objetivo principal (ganho de massa, perda de peso, definição)
+  - Tempo diário disponível para treino (ex: 30, 45, 60 minutos)
+  - Frequência semanal (quantos dias treina por semana)
+  - Local do treino
+
+---
+
+### 🏋️ Local de Treino e Identidade Visual Dinâmica
+Quando o usuário iniciar o treino, ele escolhe onde vai treinar:
+
+1. **SkyFit**
+   - Cores: amarelo e preto
+2. **Smart Fit**
+   - Cores: azul e vermelho
+3. **Gaviões**
+   - Cores: vermelho e preto
+4. **Treino em casa**
+   - Cores padrão do My Shape (azul e vermelho)
+
+⚠️ O app deve **alterar automaticamente o tema visual** (cores, botões e destaques) conforme o local escolhido.
+
+---
+
+### ▶️ Início do Treino (Start)
+Ao clicar em **START TREINO**:
+- Usuário escolhe o grupo muscular do dia:
+  - Bíceps
+  - Tríceps
+  - Ombros
+  - Peito
+  - Costas
+  - Trapézio
+  - Pernas
+  - Abdômen
+  - Treino completo
+
+---
+
+### 🧠 Inteligência de Treino
+Com base em:
+- Objetivo do usuário
+- Tempo disponível
+- Grupo muscular escolhido
+
+O app deve gerar automaticamente:
+- Lista de exercícios
+- Quantidade de séries
+- Quantidade de repetições
+- Intervalo entre séries
+
+Exemplo:
+- Rosca direta – 4x12
+- Rosca alternada – 3x10
+- Intervalo: 60 segundos
+
+---
+
+### 📅 Planejamento Semanal
+- O app organiza automaticamente os treinos da semana
+- Evita repetir grupos musculares em dias seguidos
+- Mostra um calendário simples de treino
+
+---
+
+### 💬 Frases Motivacionais
+- Ao iniciar o treino
+- Durante o treino
+- Ao finalizar o treino
+
+Exemplos:
+- "No pain, no gain."
+- "Disciplina vence motivação."
+- "Cada repetição te deixa mais perto do seu objetivo."
+- "O treino acaba, o orgulho fica."
+
+As frases devem ser exibidas de forma elegante e dinâmica.
+
+---
+
+### ✅ Final do Treino
+Ao finalizar:
+- Mensagem motivacional personalizada
+- Registro do treino realizado
+- Histórico de treinos do usuário
+
+---
+
+### 💳 Modelo SaaS – Assinatura
+- Plano mensal
+- Área preparada para pagamento (estrutura pronta, mesmo que mock inicialmente)
+- Apenas usuários assinantes têm acesso completo aos treinos automáticos
+
+---
+
+### 🧱 Tecnologias
+Escolha a melhor stack possível dentro do Replit:
+- Backend: Node.js ou Python (FastAPI ou Flask)
+- Banco de dados: SQLite ou PostgreSQL
+- Frontend mobile: React Native ou Flutter
+- Autenticação segura
+- Estrutura organizada (pastas bem definidas)
+
+---
+
+### 🎨 Design
+- Nome do app: **My Shape**
+- Logo simples e moderno
+- Cores padrão: azul e vermelho
+- Layout clean, moderno e focado em usabilidade
+- Botões grandes para uso em academia
+
+---
+
+### 📊 Funcionalidades Futuras (deixe preparado)
+- Evolução de carga
+- Comparação de desempenho
+- Notificações push
+- Ranking pessoal
+- Integração com smartwatch
+
+Crie o projeto completo, com código organizado, comentários explicativos e pronto para evolução comercial.
